@@ -1,19 +1,32 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
-    <head>
-        <title>Raspberry Pi 4B Dashboard</title>
-        <style>
-            body {
-                font-family: sans-serif;
-                background: #1e1e2e;
-                color: #f5f5f5;
-                text-align: center;
-                padding-top: 80px;
-            }
-        </style>
-    </head>
-    <body>
-        <h1>THE dashboard :D</h1>
-        <p>Hello. This is my raspberry pi project!!</p>
-    </body>
+<head>
+  <title>My Dashboard</title>
+  <style>
+    body {
+      font-family: sans-serif;
+      background: #1e1e2e;
+      color: #f5f5f5;
+      text-align: center;
+      padding-top: 80px;
+    }
+    h1 { color: #89b4fa; }
+  </style>
+</head>
+<body>
+  <h1>My Dashboard</h1>
+  <p>CPU usage: <span id="cpu">--</span>%</p>
+  <p>Memory usage: <span id="memory">--</span>%</p>
+
+  <script>
+    async function update() {
+      const response = await fetch("/stats");
+      const data = await response.json();
+      document.getElementById("cpu").textContent = data.cpu;
+      document.getElementById("memory").textContent = data.memory;
+    }
+    update();
+    setInterval(update, 1000);
+  </script>
+</body>
 </html>
